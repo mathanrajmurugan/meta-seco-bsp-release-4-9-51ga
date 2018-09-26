@@ -1,0 +1,22 @@
+From: Mathanraj  Murugan <mathan.raj@seco.com>
+
+Subject: [PATCH] imx-boot: pass dtb name to imx-mkimage when making flash.bin
+
+The default dtb file name is fsl-imx8mq-seco-c12.
+To adapt different boards, it'd be better to pass dtb name in imx-mkimage.
+
+---
+ imx/meta-bsp/recipes-bsp/imx-mkimage/imx-boot_0.2.bb | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- imx-yocto-bsp/sources/meta-fsl-bsp-release/imx/meta-bsp/recipes-bsp/imx-mkimage/imx-boot_0.2.bb	2018-06-20 19:00:21.789896818 +0530
++++ imx-yocto-bsp1/imx-yocto-bsp/sources/meta-fsl-bsp-release/imx/meta-bsp/recipes-bsp/imx-mkimage/imx-boot_0.2.bb	2018-06-20 18:53:40.837889974 +0530
+@@ -102,7 +102,7 @@
+     # mkimage for i.MX8
+     for target in ${IMXBOOT_TARGETS}; do
+         echo "building ${SOC_TARGET} - ${target}"
+-        make SOC=${SOC_TARGET} ${target}
++        make SOC=${SOC_TARGET} dtbs=${UBOOT_DTB_NAME} ${target}
+         if [ -e "${S}/${SOC_TARGET}/flash.bin" ]; then
+             cp ${S}/${SOC_TARGET}/flash.bin ${S}/${BOOT_CONFIG_MACHINE}-${target}
+         fi
